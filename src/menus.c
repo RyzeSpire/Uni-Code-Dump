@@ -41,6 +41,7 @@ uint8_t menu_cadastros()
     printf("\n");
     printf("___[1]. Cadastrar Jogador......................\n");
     printf("___[2]. Cadastrar Jogo Realizado...............\n");
+    printf("___[3]. Inativar Jogador.......................\n");
     printf("\n");
     printf("|/////////////////////////////////////////////|\n");
     printf("\n");

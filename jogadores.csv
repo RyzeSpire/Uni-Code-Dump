@@ -1,0 +1,5 @@
+Nome;ID;Idade;Altura;Peso;Posicao;Valor Venda;Valor Aquisicao;Salario;Status;Motivo Inativacao
+Lucas Silva;22942;24;1.78;74.00;Meio-campo;0.00;15000.00;350.00;Ativo;;
+Ricardo Torres;95857;28;1.85;81.00;Zagueiro;0.00;9500.00;290.00;Ativo;;
+Gabriel Costa;21500;22;1.76;69.00;atacante;0.00;18000.00;400.00;Ativo;;
+Joao Pedro;88990;31;1.83;78.00;Lateral Direito;0.00;4200.00;210.00;Ativo;;

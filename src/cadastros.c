@@ -1,5 +1,6 @@
 #include "../include/cadastros.h"
 #include "../include/utils.h"
+#include "../include/buscas.h"
 
 
 //funcoes de data management
@@ -93,22 +94,10 @@ no_jogos_t *novo_registro_jogos(lista_t *lista)
     {
         printf("Nenhum jogador cadastrado para escalar.\n");
         return NULL;
-    }
-
-    printf("\n--- Jogadores ativos Cadastrados (Nome, ID, Posicao, Status) ---\n");
-    printf("%-20s %-5s %-15s %s\n", "|Nome", "ID", "Posicao", "Status");
-    printf("-----------------------------------------------------------\n");
-
-    while(jogador_atual != NULL)
+    } else 
     {
-        if(jogador_atual->dados_jogadores.status == ATIVO)
-        {
-        printf("%-20s %-5u %-15s ", jogador_atual->dados_jogadores.nome,jogador_atual->dados_jogadores.id_jogador, jogador_atual->dados_jogadores.posicao_jogador);
-        printf("Ativo\n");
-        }
-        jogador_atual = jogador_atual->proximo;
+        exibir_jogadores_ativos(lista->cabeca_jogadores);
     }
-    printf("-----------------------------------------------------------\n\n");
     
     //o proprio escalamnto
 printf("---Escalar Jogadores---\n");
@@ -127,7 +116,7 @@ while(jogadores_adicionados_atuais < MAX_JOG)
     { 
         break;
     }
-
+    
     no_jogadores_t *jogador_achou = localizar_jogador_por_id(lista, id_temp_jogos);
 
     if (jogador_achou != NULL)
@@ -191,7 +180,7 @@ no_jogadores_t *novo_registro_jogadores()
 
     //interage com o usuario
 
-    getchar();
+ 
     printf("Cadastro de Jogador\n");
 
     //nome
@@ -343,7 +332,6 @@ void excluir_registro_jogos(no_jogos_t *registro_p_excl, lista_t *lista_jogos)
     lista_jogos->nr_nos_jogos--;
     printf("Registro de jogo excluido com sucesso\n");
 }
-
 void excluir_registro_jogadores(no_jogadores_t *registro_p_excluir, lista_t *lista_jogadores)
 {
     if(is_lista_jogadores_vazia(lista_jogadores->cabeca_jogadores))
@@ -413,7 +401,7 @@ void inativar_jogador(no_jogadores_t *registro)
             registro->dados_jogadores.status_2 = VENDIDO;
             printf("jogador %s inativado por ter sido cendido\n\n",registro->dados_jogadores.nome);
             printf("por quanto o jogador foi vendido?\n");
-            scanf("%f", registro->dados_jogadores.valor_venda);
+            scanf("%f", &registro->dados_jogadores.valor_venda);
             printf("Valor de venda registrado: R$ %.2f\n", registro->dados_jogadores.valor_venda);
 
         } else

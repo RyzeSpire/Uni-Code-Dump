@@ -1,8 +1,17 @@
 #ifndef RELATORIOS_H
 #define RELATORIOS_H
 
+#include <stdbool.h>
 #include "types.h"
 #include "utils.h"
+#include "buscas.h"
+
+void detalhes_mostrar_jogos(FILE *output, no_jogos_t *jogo, bool eh_csv, bool eh_html);
+void detalhes_mostrar_jogo_h(FILE *output, bool eh_csv, bool eh_html);
+
+
+void detalhes_mostrar_jogadores(FILE *output, no_jogadores_t *jogador, bool eh_csv, bool eh_html);
+void detalhes_mostrar_jogador_h(FILE *output, bool eh_csv, bool eh_html);
 
 //relatorios jogadores
 void listar_jogadores(no_jogadores_t *ptr_lista_jogadores);

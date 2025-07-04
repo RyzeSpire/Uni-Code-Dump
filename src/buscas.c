@@ -1,8 +1,9 @@
 #include "../include/buscas.h"
-#include "utils.c"
+#include "../include/utils.h"
+#include "../include/types.h"
 
 
-void localizar_nome(no_jogadores_t *ptr_lista_jogadores, const string str)
+void localizar_nome(no_jogadores_t *ptr_lista_jogadores, string str)
 {
     msg_cabecalho("BUSCA DE JOGADORES POR NOME");
 
@@ -16,7 +17,7 @@ void localizar_nome(no_jogadores_t *ptr_lista_jogadores, const string str)
     bool achou = false;
     no_jogadores_t *jogador_atual = ptr_lista_jogadores;
 
-    printf("Digite o nome para a busca: ");
+    printf("Digite o nome (NOME COMPLETO) para a busca: ");
     fgets(str,T_STR,stdin);
     retirar_enter(str);
 
@@ -57,7 +58,7 @@ void localizar_nome(no_jogadores_t *ptr_lista_jogadores, const string str)
     msg_press_enter();
 }
 
-void localizar_posicao(no_jogadores_t *ptr_lista_jogadores, const string str)
+void localizar_posicao(no_jogadores_t *ptr_lista_jogadores, string str)
 {
     msg_cabecalho("BUSCA DE JOGADORES POR POSICAO");
 
@@ -226,6 +227,125 @@ void localizar_jogos_por_adversario(no_jogos_t *ptr_lista_jogos, string str, lis
     msg_press_enter();
 }
 
-void localizar_maior_salario(no_jogadores_t *ptr_lista_jogadores); //localiza o(s) jogador(es) com maior salario (e o(s) lista)
+void localizar_maior_salario(no_jogadores_t *ptr_lista_jogadores)
+{
+    msg_cabecalho("BUSCA DE JOGADORES COM MAIOR SALARIO");
+    if(ptr_lista_jogadores == NULL)
+    {
+        printf("nenhum jogador cadastrado\n");
+        msg_press_enter();
+        return;
+    }
+    float maior_sal = 0;
+    no_jogadores_t *jogador_atual = ptr_lista_jogadores;
 
-void localizar_salario_faixa(no_jogadores_t *ptr_lista_jogadores, float SalMin, float SalMax); //localiza jogadores por uma faixa de salario (e os lista)
+    maior_sal = jogador_atual->dados_jogadores.salario;
+
+    jogador_atual = jogador_atual->proximo;
+
+    while(jogador_atual != NULL)
+    {
+        if(jogador_atual->dados_jogadores.salario > maior_sal)
+        {
+            maior_sal = jogador_atual->dados_jogadores.salario;
+        }
+        jogador_atual = jogador_atual->proximo;
+    }
+    printf("\nJogador(es) com o maior salario (R$ %.2f):\n", maior_sal);
+    printf("-----------------------------------------------------------\n");
+
+    jogador_atual = ptr_lista_jogadores;
+
+    while(jogador_atual != NULL)
+    {
+        if(jogador_atual->dados_jogadores.salario == maior_sal)
+        {
+            printf("Nome: %s\n",jogador_atual->dados_jogadores.nome);
+            printf("ID: %u\n",jogador_atual->dados_jogadores.id_jogador);
+            printf("Salario: R$ %.2f\n",jogador_atual->dados_jogadores.salario);
+            printf("Posicao: %s\n",jogador_atual->dados_jogadores.posicao_jogador);
+            if(jogador_atual->dados_jogadores.status == INATIVO)
+            {
+                printf("Status: Inativo");
+                if(jogador_atual->dados_jogadores.status_2 == RECUPERACAO)
+                {
+                    printf(", em recuperacao medica\n");
+                }
+                if(jogador_atual->dados_jogadores.status_2 == VENDIDO)
+                {
+                    printf(", jogador vendido\n");
+                    printf("Valor de venda: %.2f\n",jogador_atual->dados_jogadores.valor_venda);
+                }
+            } else printf("Status: Ativo\n");
+            printf("-----------------------------------------------------------\n");
+            
+        }
+        jogador_atual = jogador_atual->proximo;
+    }
+    msg_press_enter();
+}
+
+void localizar_salario_faixa(no_jogadores_t *ptr_lista_jogadores,float SalMin,float SalMax)
+{
+    msg_cabecalho("BUSCA DE JOGADORES POR FAIXA DE SALARIO");
+    if(ptr_lista_jogadores == NULL)
+    {
+        printf("nenhum jogador cadastrado\n");
+        msg_press_enter();
+        return;
+    }
+    
+    
+
+
+    bool achou = false;
+    no_jogadores_t *jogador_atual = ptr_lista_jogadores;
+
+    printf("---- Localizar Jogadores por Faixa Salarial ----\n");
+    printf("Digite a faixa salarial:\n");
+
+    printf("Menor salario: ");
+    scanf("%f", &SalMin);
+
+    printf("Maior salario: ");
+    scanf("%f", &SalMax);
+    getchar();
+
+    printf("\nResultados para salarios entre R$ %.2f e R$ %.2f:\n", SalMin, SalMax);
+    printf("-----------------------------------------------------------\n");
+
+while (jogador_atual != NULL)
+    {
+        if(jogador_atual->dados_jogadores.salario >= SalMin && jogador_atual->dados_jogadores.salario <=SalMax)
+        {
+            printf("Nome: %s\n",jogador_atual->dados_jogadores.nome);
+            printf("ID: %u\n",jogador_atual->dados_jogadores.id_jogador);
+            printf("Salario: R$ %.2f\n",jogador_atual->dados_jogadores.salario);
+            printf("Posicao: %s\n",jogador_atual->dados_jogadores.posicao_jogador);
+            if(jogador_atual->dados_jogadores.status == INATIVO)
+            {
+                printf("Status: Inativo");
+                if(jogador_atual->dados_jogadores.status_2 == RECUPERACAO)
+                {
+                    printf(", em recuperacao medica\n");
+                }
+                if(jogador_atual->dados_jogadores.status_2 == VENDIDO)
+                {
+                    printf(", jogador vendido\n");
+                    printf("Valor de venda: %.2f\n",jogador_atual->dados_jogadores.valor_venda);
+                }
+            } else printf("Status: Ativo\n");
+            printf("-----------------------------------------------------------\n");
+            achou = true;
+        }
+        jogador_atual = jogador_atual->proximo;
+    }
+
+    if(!achou)
+    {
+        printf("Nenhum jogador achado na faixa salarial entre R$ %.2f e R$ %.2f.\n", SalMin, SalMax);
+    }
+    
+
+    msg_press_enter();
+}
